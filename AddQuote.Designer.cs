@@ -177,8 +177,8 @@
             // numWidth
             // 
             numWidth.Location = new Point(601, 243);
-            numWidth.Maximum = new decimal(new int[] { 96, 0, 0, 0 });
-            numWidth.Minimum = new decimal(new int[] { 24, 0, 0, 0 });
+            numWidth.Maximum = new decimal(new int[] { 97, 0, 0, 0 });
+            numWidth.Minimum = new decimal(new int[] { 23, 0, 0, 0 });
             numWidth.Name = "numWidth";
             numWidth.Size = new Size(73, 27);
             numWidth.TabIndex = 14;
@@ -188,8 +188,8 @@
             // numDepth
             // 
             numDepth.Location = new Point(601, 289);
-            numDepth.Maximum = new decimal(new int[] { 48, 0, 0, 0 });
-            numDepth.Minimum = new decimal(new int[] { 12, 0, 0, 0 });
+            numDepth.Maximum = new decimal(new int[] { 49, 0, 0, 0 });
+            numDepth.Minimum = new decimal(new int[] { 11, 0, 0, 0 });
             numDepth.Name = "numDepth";
             numDepth.Size = new Size(72, 27);
             numDepth.TabIndex = 15;

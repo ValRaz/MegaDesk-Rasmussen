@@ -20,6 +20,9 @@ namespace MegaDesk_Rasmussen
         private void AddQuote_Load(object sender, EventArgs e)
         {
             cmbMaterial.DataSource = Enum.GetValues(typeof(DesktopMaterial));
+
+            numDepth.Minimum = 12;
+            numDepth.Maximum = 48;
         }
 
         private void numWidth_Validating(object sender, CancelEventArgs e)
@@ -36,6 +39,27 @@ namespace MegaDesk_Rasmussen
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
                 e.Handled = true;
+                return;
+            }
+
+            string newText = numDepth.Text;
+
+            if (e.KeyChar == '\b' && newText.Length > 0)
+            {
+                newText = newText.Substring(0, newText.Length - 1);
+            }
+            else
+            {
+                newText += e.KeyChar;
+            }
+
+            if (int.TryParse(newText, out int newValue))
+            {
+                if (newValue < 12 || newValue > 48)
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Depth must be between 12 and 48 inches.", "Invalid Depth", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
