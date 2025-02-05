@@ -29,7 +29,7 @@ namespace MegaDesk_Rasmussen
             lblDepth.Text = $"Depth: {_quote.Desk.Depth} inches";
             lblDrawers.Text = $"Drawers: {_quote.Desk.NumDrawers}";
             lblRushOrder.Text = $"Rush Order: {_quote.RushDays} days";
-            lblTotal.Text = $"Total: {_quote.CalculateQuote():C}";  // Display total in currency format
+            lblTotal.Text = $"Total: {_quote.CalculateQuote():C}";  
         }
 
         private void btnClose_Click(object sender, EventArgs e)

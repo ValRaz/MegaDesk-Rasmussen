@@ -96,7 +96,7 @@
             lblTotal.AutoSize = true;
             lblTotal.Font = new Font("Tahoma", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotal.ForeColor = Color.Purple;
-            lblTotal.Location = new Point(355, 351);
+            lblTotal.Location = new Point(360, 336);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(104, 34);
             lblTotal.TabIndex = 5;
@@ -129,7 +129,7 @@
             // 
             lblDrawers.AutoSize = true;
             lblDrawers.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDrawers.Location = new Point(296, 246);
+            lblDrawers.Location = new Point(313, 246);
             lblDrawers.Name = "lblDrawers";
             lblDrawers.Size = new Size(91, 24);
             lblDrawers.TabIndex = 8;

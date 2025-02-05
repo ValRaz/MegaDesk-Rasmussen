@@ -36,6 +36,7 @@ namespace MegaDesk_Rasmussen
         Laminate,
         Wood,
         Veneer,
-        Pine
+        Pine,
+        Rosewood
     }
 }
