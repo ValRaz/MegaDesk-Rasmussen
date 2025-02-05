@@ -34,7 +34,7 @@
             lblMaterial = new Label();
             lblRushOrder = new Label();
             lblTotal = new Label();
-            btnClose = new Button();
+            btnBackToMain = new Button();
             lblDepth = new Label();
             lblDrawers = new Label();
             SuspendLayout();
@@ -102,18 +102,18 @@
             lblTotal.TabIndex = 5;
             lblTotal.Text = "Total: ";
             // 
-            // btnClose
+            // btnBackToMain
             // 
-            btnClose.BackColor = Color.FromArgb(192, 0, 0);
-            btnClose.Font = new Font("Tahoma", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(694, 409);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(94, 29);
-            btnClose.TabIndex = 6;
-            btnClose.Text = "Close";
-            btnClose.UseVisualStyleBackColor = false;
-            btnClose.Click += btnClose_Click;
+            btnBackToMain.BackColor = Color.FromArgb(255, 128, 128);
+            btnBackToMain.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBackToMain.ForeColor = Color.White;
+            btnBackToMain.Location = new Point(665, 403);
+            btnBackToMain.Name = "btnBackToMain";
+            btnBackToMain.Size = new Size(123, 35);
+            btnBackToMain.TabIndex = 6;
+            btnBackToMain.Text = "Main Menu";
+            btnBackToMain.UseVisualStyleBackColor = false;
+            btnBackToMain.Click += btnClose_Click;
             // 
             // lblDepth
             // 
@@ -142,7 +142,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(lblDrawers);
             Controls.Add(lblDepth);
-            Controls.Add(btnClose);
+            Controls.Add(btnBackToMain);
             Controls.Add(lblTotal);
             Controls.Add(lblRushOrder);
             Controls.Add(lblMaterial);
@@ -166,7 +166,7 @@
         private Label lblMaterial;
         private Label lblRushOrder;
         private Label lblTotal;
-        private Button btnClose;
+        private Button btnBackToMain;
         private Label lblDepth;
         private Label lblDrawers;
     }
