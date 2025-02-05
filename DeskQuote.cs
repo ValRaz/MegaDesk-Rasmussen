@@ -45,25 +45,48 @@ namespace MegaDesk_Rasmussen
                 case DesktopMaterial.Wood:
                     return 200;
                 case DesktopMaterial.Veneer:
-                    return 150;
+                    return 125;
                 case DesktopMaterial.Pine:
                     return 50;
+                case DesktopMaterial.Rosewood:
+                    return 300;
                 default:
                     return 0;
             }
         }
 
+        private int GetSurfaceArea()
+        {
+            return Desk.Width * Desk.Depth;
+        }
+
         // Get rush order cost based on rush days
         private decimal GetRushOrderCost()
         {
+            if (RushDays == 0)
+                return 0; 
+
             if (RushDays == 3)
-                return 50; // Rush order for 3 days
-            else if (RushDays == 5)
-                return 40; // Rush order for 5 days
-            else if (RushDays == 7)
-                return 30; // Rush order for 7 days
-            else
-                return 0; // No rush order
+            {
+                if (GetSurfaceArea() < 1000) return 60;
+                if (GetSurfaceArea() <= 2000) return 70;
+                return 80;
+            }
+            if (RushDays == 5)
+            {
+                if (GetSurfaceArea() < 1000) return 40;
+                if (GetSurfaceArea() <= 2000) return 50;
+                return 60;
+            }
+            if (RushDays == 7)
+            {
+                if (GetSurfaceArea() < 1000) return 30;
+                if (GetSurfaceArea() <= 2000) return 35;
+                return 40;
+            }
+
+            return 0; 
         }
+
     }
 }

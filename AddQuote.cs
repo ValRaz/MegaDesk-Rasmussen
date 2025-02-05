@@ -81,9 +81,9 @@ namespace MegaDesk_Rasmussen
                 }
 
                 int rushOrderDays = (int)numRushOrder.Value;
-                if (rushOrderDays != 3 && rushOrderDays != 5 && rushOrderDays != 7)
+                if (rushOrderDays != 0 && rushOrderDays != 3 && rushOrderDays != 5 && rushOrderDays != 7)
                 {
-                    MessageBox.Show("Please select a valid rush order option (3, 5, or 7 days).", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please select a valid rush order option (0 for normal, 3, 5, or 7 days).", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
