@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -108,6 +109,8 @@ namespace MegaDesk_Rasmussen
 
                 decimal quoteTotal = quote.CalculateQuote();
 
+                SaveQuoteToJson(quote);
+
                 DisplayQuote displayQuoteForm = new DisplayQuote(quote);
                 displayQuoteForm.Show();
                 this.Hide();
@@ -116,6 +119,31 @@ namespace MegaDesk_Rasmussen
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void SaveQuoteToJson(DeskQuote quote)
+        {
+            string filePath = "quotes.json";
+
+            List<DeskQuote> quotes;
+
+            // Check if file exists and read existing data
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                quotes = JsonSerializer.Deserialize<List<DeskQuote>>(json) ?? new List<DeskQuote>();
+            }
+            else
+            {
+                quotes = new List<DeskQuote>();
+            }
+
+            // Add the new quote
+            quotes.Add(quote);
+
+            // Serialize and save to file
+            string updatedJson = JsonSerializer.Serialize(quotes, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, updatedJson);
         }
     }
 }

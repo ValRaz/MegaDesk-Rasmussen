@@ -24,6 +24,9 @@ namespace MegaDesk_Rasmussen
         {
             cmbMaterialSearch.DataSource = Enum.GetValues(typeof(DesktopMaterial));
             LoadQuotesFromJson();
+            listViewMaterialSearchResults.View = View.Details;
+            listViewMaterialSearchResults.FullRowSelect = true;
+            listViewMaterialSearchResults.ItemActivate += listViewMaterialSearchResults_ItemActivate;
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -32,7 +35,6 @@ namespace MegaDesk_Rasmussen
 
         private void cmbMaterialSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbMaterialSearch.DataSource = Enum.GetValues(typeof(DesktopMaterial));
         }
 
         private void btnMaterialSearch_Click(object sender, EventArgs e)
@@ -58,6 +60,14 @@ namespace MegaDesk_Rasmussen
             {
                 string jsonContent = File.ReadAllText(filePath);
                 allQuotes = JsonConvert.DeserializeObject<List<DeskQuote>>(jsonContent) ?? new List<DeskQuote>();
+
+                foreach (var quote in allQuotes)
+                {
+                    if (Enum.TryParse(typeof(DesktopMaterial), quote.Desk.Material.ToString(), out var parsedMaterial))
+                    {
+                        quote.Desk.Material = (DesktopMaterial)parsedMaterial;
+                    }
+                }
             }
             else
             {
@@ -77,38 +87,33 @@ namespace MegaDesk_Rasmussen
             if (filteredQuotes.Count == 0)
             {
                 listViewMaterialSearchResults.Items.Add(new ListViewItem("No quotes found for the selected material"));
-                listViewMaterialSearchResults.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
             else
             {
                 foreach (var quote in filteredQuotes)
                 {
-                    var item = new ListViewItem(quote.CustomerName);
-                    item.SubItems.Add(quote.QuoteDate.ToShortDateString());
-                    item.SubItems.Add(quote.Desk.Material.ToString());
-                    item.SubItems.Add(quote.CalculateQuote().ToString("C"));
-
+                    var item = new ListViewItem(quote.CustomerName); 
                     listViewMaterialSearchResults.Items.Add(item);
                 }
             }
         }
 
-        private void listViewMaterialSearchResults_SelectedIndexChanged(object sender, EventArgs e)
+        private void listViewMaterialSearchResults_ItemActivate(object? sender, EventArgs e)
         {
             if (listViewMaterialSearchResults.SelectedItems.Count > 0)
             {
                 var selectedItem = listViewMaterialSearchResults.SelectedItems[0];
 
                 string selectedCustomerName = selectedItem.Text;
-                DateTime selectedQuoteDate = DateTime.Parse(selectedItem.SubItems[1].Text);
 
                 DeskQuote selectedQuote = allQuotes.FirstOrDefault(q =>
-                    q.CustomerName == selectedCustomerName && q.QuoteDate == selectedQuoteDate);
+                    q.CustomerName == selectedCustomerName);
 
                 if (selectedQuote != null)
                 {
                     DisplayQuote displayQuoteForm = new DisplayQuote(selectedQuote);
                     displayQuoteForm.Show();
+                    this.Hide();
                 }
             }
         }

@@ -34,9 +34,6 @@
             btnMaterialSearch = new Button();
             listViewMaterialSearchResults = new ListView();
             customerName = new ColumnHeader();
-            quoteDate = new ColumnHeader();
-            material = new ColumnHeader();
-            price = new ColumnHeader();
             lblMatrialSearchResults = new Label();
             btnBackToMain = new Button();
             Title = new Label();
@@ -94,7 +91,7 @@
             // 
             // listViewMaterialSearchResults
             // 
-            listViewMaterialSearchResults.Columns.AddRange(new ColumnHeader[] { customerName, quoteDate, material, price });
+            listViewMaterialSearchResults.Columns.AddRange(new ColumnHeader[] { customerName });
             listViewMaterialSearchResults.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             listViewMaterialSearchResults.ForeColor = Color.FromArgb(0, 64, 64);
             listViewMaterialSearchResults.Location = new Point(147, 401);
@@ -106,18 +103,7 @@
             // customerName
             // 
             customerName.Text = "Customer Name";
-            // 
-            // quoteDate
-            // 
-            quoteDate.Text = "QuoteDate";
-            // 
-            // material
-            // 
-            material.Text = "Material";
-            // 
-            // price
-            // 
-            price.Text = "Total Price";
+            customerName.Width = 500;
             // 
             // lblMatrialSearchResults
             // 
@@ -173,9 +159,6 @@
         private ListView listViewMaterialSearchResults;
         private Label lblMatrialSearchResults;
         private ColumnHeader customerName;
-        private ColumnHeader quoteDate;
-        private ColumnHeader material;
-        private ColumnHeader price;
         private Button btnBackToMain;
     }
 }
