@@ -109,8 +109,10 @@ namespace MegaDesk_Rasmussen
 
                 decimal quoteTotal = quote.CalculateQuote();
 
+                // Save the quote to JSON
                 SaveQuoteToJson(quote);
 
+                // Display the quote
                 DisplayQuote displayQuoteForm = new DisplayQuote(quote);
                 displayQuoteForm.Show();
                 this.Hide();
