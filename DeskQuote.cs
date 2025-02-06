@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MegaDesk_Rasmussen
 {
@@ -12,6 +13,9 @@ namespace MegaDesk_Rasmussen
         public int RushDays { get; set; }
         public string CustomerName { get; set; }
         public DateTime QuoteDate { get; set; }
+
+        private const string FilePath = "quotes.json";
+
 
         // Constructor
         public DeskQuote(Desk desk, int rushDays, string customerName)
@@ -86,6 +90,29 @@ namespace MegaDesk_Rasmussen
             }
 
             return 0; 
+        }
+
+        public void SaveQuote()
+        {
+            List<DeskQuote> quotes = new List<DeskQuote>();
+
+            // Ensure file exists and read existing quotes
+            if (File.Exists(FilePath))
+            {
+                string existingJson = File.ReadAllText(FilePath);
+                if (!string.IsNullOrWhiteSpace(existingJson))
+                {
+                    quotes = JsonConvert.DeserializeObject<List<DeskQuote>>(existingJson) ?? new List<DeskQuote>();
+                }
+            }
+
+            // Add the new quote
+            quotes.Add(this);
+
+            // Serialize and write back to file
+            File.WriteAllText(FilePath, JsonConvert.SerializeObject(quotes, Formatting.Indented));
+
+            Console.WriteLine("Quote saved successfully!");
         }
 
     }
