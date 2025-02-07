@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace MegaDesk_Rasmussen
 {
@@ -29,6 +31,8 @@ namespace MegaDesk_Rasmussen
             decimal surfaceMaterialCost = GetMaterialCost();
             decimal drawerCost = Desk.NumDrawers * 50; // $50 per drawer
             decimal rushOrderCost = GetRushOrderCost();
+            
+            
 
             // Formula for total price
             decimal totalPrice = basePrice + surfaceMaterialCost + drawerCost + rushOrderCost;
@@ -56,14 +60,127 @@ namespace MegaDesk_Rasmussen
         // Get rush order cost based on rush days
         private decimal GetRushOrderCost()
         {
+            
+            int surfaceArea = Desk.Width * Desk.Depth;
+            int rushPrice = 0;
+
+            int[,] rushOptions = GetRushOrder();
+
+            if (rushOptions == null)
+            {
+                System.Diagnostics.Debug.WriteLine("Error: rushOptions is null.");
+                return 0; 
+            }
+
             if (RushDays == 3)
-                return 50; // Rush order for 3 days
+                switch (surfaceArea)
+                {
+                    case int n when (n < 1000):
+                        rushPrice = rushOptions[0, 0];
+                        break;
+                    case int n when (n >= 1000 && n <= 2000):
+                        rushPrice = rushOptions[0, 1];
+                        break;
+                    case int n when (n > 2000):
+                        rushPrice = rushOptions[0, 2];
+                        break;
+                }
             else if (RushDays == 5)
-                return 40; // Rush order for 5 days
+                switch (surfaceArea)
+                {
+                    case int n when (n < 1000):
+                        rushPrice = rushOptions[1, 0];
+                        break;
+                    case int n when (n >= 1000 && n <= 2000):
+                        rushPrice = rushOptions[1, 1];
+                        break;
+                    case int n when (n > 2000):
+                        rushPrice = rushOptions[1, 2];
+                        break;
+                }
             else if (RushDays == 7)
-                return 30; // Rush order for 7 days
+            {
+                switch (surfaceArea)
+                {
+                    case int n when (n < 1000):
+                        rushPrice = rushOptions[2, 0];
+                        break;
+                    case int n when (n >= 1000 && n <= 2000):
+                        rushPrice = rushOptions[2, 1];
+                        break;
+                    case int n when (n > 2000):
+                        rushPrice = rushOptions[2, 2];
+                        break;
+                }
+            }
             else
-                return 0; // No rush order
+            {
+                rushPrice = 0;
+            }
+            return rushPrice;
         }
+
+        static int[,] GetRushOrder()
+        {
+            try
+            {
+
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "rushOrderTxt.txt");
+                //decimal rushPrice = 0;
+                if (!File.Exists(filePath))
+                {
+                    System.Diagnostics.Debug.WriteLine("File not found");
+                }
+                
+                string[] lines = File.ReadAllLines(filePath);
+
+                int rowCount = 3;
+                int columnCount = 3; ;
+
+                if (lines.Length != rowCount * columnCount)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error: Expected {rowCount * columnCount} values, but found {lines.Length}");
+                }
+
+                int[,] rushOrderPrices = new int[rowCount, columnCount];
+
+                int index = 0; //track the index of the array
+
+                for (int i = 0; i < rowCount; i++)
+                {
+
+                    for (int j = 0; j < columnCount; j++)
+                    {
+                        if (!int.TryParse(lines[index].Trim(), out rushOrderPrices[i, j]))
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error: Cannot parse '{lines[index]}' at row {i + 1}, column {j + 1}");
+                        }
+                        index++;
+                    }
+
+                };
+                return rushOrderPrices;
+
+                //for (int i = 0; i < rowCount; i++)
+                //{
+                //    for (int j = 0; j < columnCount; j++)
+                //    {
+                //        System.Diagnostics.Debug.Write(rushOrderPrices[i, j] + "\t");
+                //    }
+                //    System.Diagnostics.Debug.WriteLine(""); New line after each row
+                //}
+            }
+
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error reading file: {ex.Message}");
+                return null;
+            }
+
+
+        }
+
+
+
     }
 }
